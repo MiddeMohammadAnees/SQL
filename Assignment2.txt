@@ -1,0 +1,59 @@
+create database consultaion;
+
+create table doctor(doc_id integer primary key ,
+doc_name varchar(50) not null ,
+specialization varchar(50));
+
+ 
+create table patient(patient_id integer primary key,
+patient_name varchar(50) not null,
+email varchar(60) default "",
+phone bigint not null);
+
+
+create table appointments(id integer primary key ,
+ doc_id integer not null ,
+ patient_id integer not null,
+ appointment_date date , 
+ appointment_time time,
+ status integer not null,
+ foreign key(doc_id) references doctor(doc_id),
+ foreign key(patient_id) references patient(patient_id));
+ 
+ create table review(id integer primary key,
+ doc_id integer not null,
+ patient_id integer not null,
+ rating integer default 1,
+ comment varchar(200),
+ date date);
+ 
+ 
+ -- 2nd question
+ #1 selecting all columns from the Contact table where active_flag=1
+ select * from contacts where  active_flag=1;
+ 
+ #2 Deactivation  of contacts who are opted out 
+ update contacts set active_flag=0 where opt_out=1;
+ 
+ #3 Deleting all the contacts who have the company name as ‘ABC’
+ delete from contacts where company='ABC';
+ 
+ #4Inserting a new row with id as 658, name as ‘mili’, email as ‘mili@gmail.com’,
+ #the company as ‘DGH’, active flag as 1, opt-out flag as 1
+ insert into contacts(Id ,Email ,fname ,lname , company , Active_flag ,opt_out)
+ values(856, 'anees' ,null,'anees@gmail.com' ,'ABC',1,1);
+ 
+ #5 Pulling out the unique values of the company column
+ select distinct(company) from contacts;
+ 
+ #6 Updating name “mili” to “niti”.
+update contacts set fname='Dhoni' where fname='anees';
+
+-- 3 Question
+/* Writing a SQL query to find those customers with a grade less than 100.
+ It should return cust_name, customer city, grade, salesman, and salesman city.
+ The result should be ordered by ascending customer_id.m */
+
+ select c.cust_name , c.city , c.grade ,s.name, s.city from customer c
+ join saleman s on c.cust_id = s.cust_id
+ where c.grade<100 order by c.cust_id asc;
